@@ -8,17 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="message">
-        {{reversedMessage}}
-        {{click}} <button @click="click++">click me</button>
-        <br>
-        <input type="text" v-model="newItem" @keydown.enter="addItem">
-        <button @click="addItem">Add</button>
-
-        
-        <item-list :items="items"><i>All items</i></item-list>
-        <item-list :items="doneItems">Done items</item-list>
-        <item-list :items="notDoneItems">Not done items</item-list>
+        <app></app>
     </div>
 </body>
 </html>
