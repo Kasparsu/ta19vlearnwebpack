@@ -2,25 +2,21 @@
 <div>
   <!-- <todo-example></todo-example> -->
     <button class="button is-primary" @click="active=true">Click me</button>
-    <div class="modal" :class="{'is-active': active}">
-        <div class="modal-background" @click="active=false"></div>
-        <div class="modal-content">
-            <p class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="">
-            </p>
-        </div>
-        <button class="modal-close is-large" aria-label="close" @click="active=false"></button>
-    </div>
+    <button class="button is-primary" @click="active2=true">Click me too</button>
+    <modal v-if="active" @close="active=false" img="http://placekitten.com/800/600"></modal>
+    <modal v-show="active2" @close="active2=false" img="http://placebear.com/800/600"></modal>
 </div>
 </template>
 
 <script>
+import Modal from './components/Modal.vue'
 import TodoExample from './components/TodoExample.vue'
 export default {
-    components: { TodoExample },
+    components: { TodoExample, Modal },
     data() {
         return {
             active: false,
+            active2: false
         }
     }
 }
