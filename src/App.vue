@@ -1,27 +1,45 @@
 <template>
     <div class="container">
-        <div class="columns is-multiline">
-            <div class="column is-one-quarter" v-for="post in posts" :key="post.id">
-                <post-card :post="post"></post-card>
-            </div>
-        </div>
+       <input type="text" class="input" v-model="message" @keydown.enter="sendMessage">
+       <ul>
+           <li v-for="(message, key) in messages" :key="key" class="mt-3">
+                <span class="tag is-primary is-light is-size-3">{{message}}</span>
+           </li>
+       </ul>
     </div>
 </template>
 
 <script>
-import PostCard from './components/PostCard.vue';
-const axios = require('axios');
+
 export default {
-  components: { PostCard },
     created(){
-        axios.get('http://localhost:8000/api/posts').then(response => {
-            console.log(response);
-            this.posts = response.data;
-        });
+        // Create WebSocket connection.
+        this.ws = new WebSocket('ws://localhost:3333');
+
+        // Connection opened
+        this.ws.addEventListener('open', this.onOpen);
+
+        // Listen for messages
+        this.ws.addEventListener('message', this.onMessage);
     },
     data() {
         return {
-          posts: []
+          ws: null,
+          message: '',
+          messages: []
+        }
+    },
+    methods: {
+        onOpen(event) {
+            
+        },
+        onMessage(event){
+            console.log('Message from server ', event.data);
+            this.messages.push(event.data);
+        },
+        sendMessage(){
+            this.ws.send(this.message);
+            this.message = '';
         }
     }
 }
