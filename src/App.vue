@@ -1,21 +1,27 @@
 <template>
-    <div>
-        <h1 class="is-size-1">{{joke}}</h1>
+    <div class="container">
+        <div class="columns is-multiline">
+            <div class="column is-one-quarter" v-for="post in posts" :key="post.id">
+                <post-card :post="post"></post-card>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import PostCard from './components/PostCard.vue';
 const axios = require('axios');
 export default {
+  components: { PostCard },
     created(){
-        axios.get('https://api.chucknorris.io/jokes/random').then(response => {
+        axios.get('http://localhost:8000/api/posts').then(response => {
             console.log(response);
-            this.joke = response.data.value;
+            this.posts = response.data;
         });
     },
     data() {
         return {
-          joke: ''
+          posts: []
         }
     }
 }
