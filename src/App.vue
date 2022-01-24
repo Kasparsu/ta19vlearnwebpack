@@ -1,26 +1,16 @@
 <template>
     <div class="container">
-       <input type="text" class="input" v-model="message" @keydown.enter="sendMessage">
-       <ul>
-           <li v-for="(message, key) in messages" :key="key" class="mt-3">
-                <span class="tag is-primary is-light is-size-3">{{message}}</span>
-           </li>
-       </ul>
+      
     </div>
 </template>
 
 <script>
-
+const axios = require('axios');
 export default {
     created(){
-        // Create WebSocket connection.
-        this.ws = new WebSocket('ws://localhost:3333');
-
-        // Connection opened
-        this.ws.addEventListener('open', this.onOpen);
-
-        // Listen for messages
-        this.ws.addEventListener('message', this.onMessage);
+        axios.get('http://localhost:8000/api/proxy/timetableByRoom/14?from=2022-01-17T00:00:00Z&room=4250&thru=2022-01-23T00:00:00Z').then(response => {
+            console.log(response);
+        })
     },
     data() {
         return {
