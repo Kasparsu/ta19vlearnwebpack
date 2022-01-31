@@ -8,9 +8,17 @@
 const axios = require('axios');
 export default {
     created(){
-        axios.get('http://localhost:8000/api/proxy/timetableByRoom/14?from=2022-01-17T00:00:00Z&room=4250&thru=2022-01-23T00:00:00Z').then(response => {
-            console.log(response);
-        })
+        let date = new Date();
+        let now = date.toISOString();
+        setInterval(() => {
+            
+            axios.get('http://127.0.0.1:8000/api/posts/new?from=' + now).then(({data}) => {
+                     if(data.length && data[data.length-1].created_at){
+                        console.log(data);
+                        now = data[data.length-1].created_at;
+                    }
+            })
+        }, 1000);
     },
     data() {
         return {
